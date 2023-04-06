@@ -1,0 +1,31 @@
+import UIKit
+
+class ViewController: UIViewController {
+
+    @IBOutlet weak var timerLabel: UILabel! // IBOutlet для отображения оставшегося времени
+    
+    var timer: Timer? // переменная для хранения объекта таймера
+    var totalTime = 60 // общее количество времени в секундах
+    
+    override func viewDidLoad() {
+   
+        super.viewDidLoad()
+    }
+
+    @IBAction func startTimer(_ sender: Any) {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true) // создаем таймер, который будет вызывать функцию updateTimer каждую секунду
+    }
+    
+    @IBAction func stopTimer(_ sender: Any) {
+        timer?.invalidate() // останавливаем таймер
+    }
+    
+    @objc func updateTimer() {
+        if totalTime > 0 {
+            totalTime -= 1 // уменьшаем оставшееся время на одну секунду
+            timerLabel.text = "\(totalTime)" // обновляем текст на экране
+        } else {
+            timer?.invalidate() // останавливаем таймер, если время закончилось
+        }
+    }
+}
