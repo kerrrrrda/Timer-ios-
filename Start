@@ -29,3 +29,38 @@ class ViewController: UIViewController {
         }
     }
 }
+
+
+import UIKit
+
+class ViewController: UIViewController {
+    
+    @IBOutlet weak var timeLabel: UILabel!
+    
+    var timer = Timer()
+    var counter = 0
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func startTimer(_ sender: Any) {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+    }
+    
+    @IBAction func stopTimer(_ sender: Any) {
+        timer.invalidate()
+        counter = 0
+        timeLabel.text = "00:00:00"
+    }
+    
+    @objc func updateTimer() {
+        counter += 1
+        let hours = counter / 3600
+        let minutes = (counter / 60) % 60
+        let seconds = counter % 60
+        timeLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    }
+    
+}
